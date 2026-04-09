@@ -11,12 +11,49 @@ import {
   Menu,
   X,
   Send,
-  Activity
+  Activity,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 const WHATSAPP_NUMBER = "56926282933";
 const WHATSAPP_MESSAGE = "Hola Dr. Sabah, vi su página y quiero agendar una consulta.";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+
+function Carousel({ images }: { images: string[] }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prev = () => setCurrentIndex((curr) => (curr === 0 ? images.length - 1 : curr - 1));
+  const next = () => setCurrentIndex((curr) => (curr === images.length - 1 ? 0 : curr + 1));
+
+  return (
+    <div className="relative w-full h-[500px] bg-gray-100 rounded-2xl overflow-hidden group shadow-lg">
+      <div 
+        className="flex transition-transform ease-out duration-500 h-full" 
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {images.map((src, i) => (
+          <img key={i} src={src} alt={`Caso ${i + 1}`} className="w-full h-full object-cover flex-shrink-0" />
+        ))}
+      </div>
+      <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+        <button onClick={prev} className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white">
+          <ChevronLeft size={24} />
+        </button>
+        <button onClick={next} className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white">
+          <ChevronRight size={24} />
+        </button>
+      </div>
+      <div className="absolute bottom-4 right-0 left-0">
+        <div className="flex items-center justify-center gap-2">
+          {images.map((_, i) => (
+            <div key={i} className={`transition-all w-2 h-2 bg-white rounded-full ${currentIndex === i ? "p-1" : "bg-opacity-50"}`} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Logo() {
   return (
@@ -323,73 +360,14 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="max-w-4xl mx-auto mb-16">
               {/* Caso 1: Hallux Valgus */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-muted/30 hover:shadow-md transition-shadow">
-                <div className="relative h-48 bg-gray-200 flex items-center justify-center">
-                  <div className="absolute inset-0 flex">
-                    <div className="w-1/2 bg-gray-300 border-r border-white flex items-center justify-center relative">
-                      <span className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded z-10">Antes</span>
-                      {/* Placeholder for Before Image */}
-                      <img src="https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&q=80&w=400" alt="Antes Hallux Valgus" className="w-full h-full object-cover opacity-80 mix-blend-luminosity" />
-                    </div>
-                    <div className="w-1/2 bg-gray-100 flex items-center justify-center relative">
-                      <span className="absolute bottom-2 right-2 bg-primary/80 text-white text-xs px-2 py-1 rounded z-10">Después</span>
-                      {/* Placeholder for After Image */}
-                      <img src="https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&q=80&w=400" alt="Después Hallux Valgus" className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-heading text-xl font-bold text-dark mb-2">Hallux Valgus (Juanete)</h3>
-                  <p className="text-dark/70 text-sm">
-                    Corrección mediante cirugía mínimamente invasiva. Paciente recuperó la marcha sin dolor a las pocas semanas, con excelente resultado estético.
-                  </p>
-                </div>
-              </div>
-
-              {/* Caso 2: Fractura */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-muted/30 hover:shadow-md transition-shadow">
-                <div className="relative h-48 bg-gray-200 flex items-center justify-center">
-                  <div className="absolute inset-0 flex">
-                    <div className="w-1/2 bg-gray-300 border-r border-white flex items-center justify-center relative">
-                      <span className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded z-10">Antes</span>
-                      <img src="https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&q=80&w=400" alt="Antes Fractura" className="w-full h-full object-cover opacity-80 mix-blend-luminosity" />
-                    </div>
-                    <div className="w-1/2 bg-gray-100 flex items-center justify-center relative">
-                      <span className="absolute bottom-2 right-2 bg-primary/80 text-white text-xs px-2 py-1 rounded z-10">Después</span>
-                      <img src="https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&q=80&w=400" alt="Después Fractura" className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-heading text-xl font-bold text-dark mb-2">Luxofractura de Tobillo</h3>
-                  <p className="text-dark/70 text-sm">
-                    Reducción y osteosíntesis. Recuperación completa de la movilidad articular y retorno a actividades deportivas tras rehabilitación.
-                  </p>
-                </div>
-              </div>
-
-              {/* Caso 3: Lesión Deportiva */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-muted/30 hover:shadow-md transition-shadow">
-                <div className="relative h-48 bg-gray-200 flex items-center justify-center">
-                  <div className="absolute inset-0 flex">
-                    <div className="w-1/2 bg-gray-300 border-r border-white flex items-center justify-center relative">
-                      <span className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded z-10">Antes</span>
-                      <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=400" alt="Antes Lesión" className="w-full h-full object-cover opacity-80 mix-blend-luminosity" />
-                    </div>
-                    <div className="w-1/2 bg-gray-100 flex items-center justify-center relative">
-                      <span className="absolute bottom-2 right-2 bg-primary/80 text-white text-xs px-2 py-1 rounded z-10">Después</span>
-                      <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=400" alt="Después Lesión" className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-heading text-xl font-bold text-dark mb-2">Rotura Tendón de Aquiles</h3>
-                  <p className="text-dark/70 text-sm">
-                    Reparación quirúrgica percutánea. El paciente, deportista amateur, logró volver a correr sin molestias ni limitación funcional.
-                  </p>
-                </div>
+              <div className="h-full">
+                <Carousel images={[
+                  "https://lh3.googleusercontent.com/d/1TM66uSaO6u66f-zitIRtrBA3h20dtP7B",
+                  "https://lh3.googleusercontent.com/d/1MvbjXghPOy2DkuV3xX86QADgy-32shEO",
+                  "https://lh3.googleusercontent.com/d/1PJXEHQdCtO_8AGa5u_wIXNqZGMIxEeLj"
+                ]} />
               </div>
             </div>
           </div>
