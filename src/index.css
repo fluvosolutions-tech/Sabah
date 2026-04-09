@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@800&family=Playfair+Display:ital@0;1&display=swap');
+
+@theme {
+  --color-primary: #1E5BB8;
+  --color-secondary: #5FC9BD;
+  --color-accent: #A5C9F7;
+  --color-muted: #BFD0D6;
+  --color-dark: #0A0A0A;
+  --color-light: #F5F5F5;
+  --color-white: #FFFFFF;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-dark);
+  background-color: var(--color-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
